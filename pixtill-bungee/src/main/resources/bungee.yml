@@ -1,0 +1,4 @@
+name: Pixtill
+version: '${version}'
+main: pl.pixtill.plugin.bungee.PixtillBungeePlugin
+author: Pixtill

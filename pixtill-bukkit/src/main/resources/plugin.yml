@@ -1,0 +1,15 @@
+name: Pixtill
+version: '${version}'
+main: pl.pixtill.plugin.bukkit.PixtillBukkitPlugin
+api-version: 1.13
+author: Pixtill
+description: Connects your server to a Pixtill store and runs purchase commands.
+commands:
+  pixtill:
+    description: Pixtill administration command.
+    usage: /pixtill reload
+    permission: pixtill.reload
+permissions:
+  pixtill.reload:
+    description: Allows reloading the Pixtill configuration.
+    default: op
