@@ -1,8 +1,8 @@
 package pl.pixtill.plugin.port;
 
-import pl.pixtill.plugin.domain.PlayerName;
+import pl.pixtill.plugin.domain.PlayerIdentifier;
 
 public interface PlayerAccessor {
 
-    boolean isOnline(PlayerName player);
+    boolean isOnline(PlayerIdentifier player);
 }

@@ -58,8 +58,10 @@ class HttpPixtillApiClientTest {
     void claimsCommandsFromBatch() throws Exception {
         server.enqueue(new MockResponse().setResponseCode(200).setBody(
                 "{\"@type\":\"CommandBatch\",\"serverUuid\":\"" + SERVER.value() + "\",\"commands\":["
-                        + "{\"uuid\":\"22222222-2222-2222-2222-222222222222\",\"command\":\"say hi\",\"playerNickname\":\"Notch\"},"
-                        + "{\"uuid\":\"33333333-3333-3333-3333-333333333333\",\"command\":\"broadcast hi\",\"playerNickname\":null}"
+                        + "{\"uuid\":\"22222222-2222-2222-2222-222222222222\",\"command\":\"say hi\","
+                        + "\"playerIdentifier\":\"Notch\",\"requiresOnlinePlayer\":true},"
+                        + "{\"uuid\":\"33333333-3333-3333-3333-333333333333\",\"command\":\"broadcast hi\","
+                        + "\"playerIdentifier\":null,\"requiresOnlinePlayer\":false}"
                         + "],\"leaseExpiresAt\":\"2026-08-23T19:00:00Z\"}"));
 
         final List<QueuedCommand> commands = client.claim(SERVER, 100);

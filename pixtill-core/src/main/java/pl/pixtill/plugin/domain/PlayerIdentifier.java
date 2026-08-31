@@ -3,32 +3,32 @@ package pl.pixtill.plugin.domain;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public final class PlayerName {
+public final class PlayerIdentifier {
 
-    private static final Pattern VALID = Pattern.compile("[A-Za-z0-9_]{3,16}");
+    private static final Pattern VALID = Pattern.compile("[A-Za-z0-9_.:-]{3,100}");
 
     private final String value;
 
-    private PlayerName(final String value) {
+    private PlayerIdentifier(final String value) {
         this.value = value;
     }
 
-    public static PlayerName of(final String raw) {
+    public static PlayerIdentifier of(final String raw) {
         if (raw == null || raw.trim().isEmpty()) {
-            throw new InvalidValueException("player name must not be empty.");
+            throw new InvalidValueException("player identifier must not be empty.");
         }
         final String trimmed = raw.trim();
         if (!VALID.matcher(trimmed).matches()) {
-            throw new InvalidValueException("invalid player name: " + trimmed);
+            throw new InvalidValueException("invalid player identifier: " + trimmed);
         }
-        return new PlayerName(trimmed);
+        return new PlayerIdentifier(trimmed);
     }
 
     public String value() {
         return value;
     }
 
-    public boolean equalsIgnoreCase(final PlayerName other) {
+    public boolean equalsIgnoreCase(final PlayerIdentifier other) {
         return other != null && value.equalsIgnoreCase(other.value);
     }
 
@@ -37,10 +37,10 @@ public final class PlayerName {
         if (this == other) {
             return true;
         }
-        if (!(other instanceof PlayerName)) {
+        if (!(other instanceof PlayerIdentifier)) {
             return false;
         }
-        return value.equals(((PlayerName) other).value);
+        return value.equals(((PlayerIdentifier) other).value);
     }
 
     @Override

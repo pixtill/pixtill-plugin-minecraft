@@ -41,8 +41,8 @@ class ValueObjectContractTest {
     }
 
     @Test
-    void playerNameHasValueSemantics() {
-        valueSemantics(PlayerName.of("Notch"), PlayerName.of("Notch"), PlayerName.of("Herobrine"));
+    void playerIdentifierHasValueSemantics() {
+        valueSemantics(PlayerIdentifier.of("Notch"), PlayerIdentifier.of("Notch"), PlayerIdentifier.of("Herobrine"));
     }
 
     @Test
@@ -65,14 +65,14 @@ class ValueObjectContractTest {
         final CommandId id = CommandId.of("33333333-3333-3333-3333-333333333333");
         final ConsoleCommand cmd = ConsoleCommand.of("say hi");
         valueSemantics(
-                new QueuedCommand(id, cmd, PlayerName.of("Notch"), true),
-                new QueuedCommand(id, cmd, PlayerName.of("Notch"), true),
-                new QueuedCommand(CommandId.of(UUID.randomUUID().toString()), cmd, PlayerName.of("Notch"), true));
+                new QueuedCommand(id, cmd, PlayerIdentifier.of("Notch"), true),
+                new QueuedCommand(id, cmd, PlayerIdentifier.of("Notch"), true),
+                new QueuedCommand(CommandId.of(UUID.randomUUID().toString()), cmd, PlayerIdentifier.of("Notch"), true));
     }
 
     @Test
-    void playerNameCaseInsensitiveComparisonHandlesNull() {
-        assertThat(PlayerName.of("Notch").equalsIgnoreCase(null)).isFalse();
+    void playerIdentifierCaseInsensitiveComparisonHandlesNull() {
+        assertThat(PlayerIdentifier.of("Notch").equalsIgnoreCase(null)).isFalse();
     }
 
     @Test

@@ -7,13 +7,13 @@ public final class QueuedCommand {
 
     private final CommandId id;
     private final ConsoleCommand command;
-    private final PlayerName player;
+    private final PlayerIdentifier player;
     private final boolean requiresPlayerOnline;
 
     public QueuedCommand(
             final CommandId id,
             final ConsoleCommand command,
-            final PlayerName player,
+            final PlayerIdentifier player,
             final boolean requiresPlayerOnline) {
         if (id == null) {
             throw new InvalidValueException("QueuedCommand: id must not be null.");
@@ -35,7 +35,7 @@ public final class QueuedCommand {
         return command;
     }
 
-    public Optional<PlayerName> player() {
+    public Optional<PlayerIdentifier> player() {
         return Optional.ofNullable(player);
     }
 
@@ -79,6 +79,6 @@ public final class QueuedCommand {
     }
 
     public interface PlayerPresence {
-        boolean isOnline(PlayerName player);
+        boolean isOnline(PlayerIdentifier player);
     }
 }

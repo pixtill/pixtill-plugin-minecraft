@@ -24,22 +24,30 @@ class ValueObjectsTest {
     }
 
     @Nested
-    class PlayerNameTests {
+    class PlayerIdentifierTests {
         @Test
         void acceptsValidNick() {
-            assertThat(PlayerName.of("Notch_01").value()).isEqualTo("Notch_01");
+            assertThat(PlayerIdentifier.of("Notch_01").value()).isEqualTo("Notch_01");
+        }
+
+        @Test
+        void acceptsGameNeutralIdentifiers() {
+            assertThat(PlayerIdentifier.of("license:5f3a9c").value()).isEqualTo("license:5f3a9c");
+            assertThat(PlayerIdentifier.of("76561198000000000").value()).isEqualTo("76561198000000000");
         }
 
         @Test
         void caseInsensitiveComparison() {
-            assertThat(PlayerName.of("Notch").equalsIgnoreCase(PlayerName.of("notch"))).isTrue();
+            assertThat(PlayerIdentifier.of("Notch").equalsIgnoreCase(PlayerIdentifier.of("notch"))).isTrue();
         }
 
         @Test
         void rejectsTooShortTooLongOrIllegalChars() {
-            assertThatThrownBy(() -> PlayerName.of("ab")).isInstanceOf(InvalidValueException.class);
-            assertThatThrownBy(() -> PlayerName.of("ThisNameIsWayTooLong")).isInstanceOf(InvalidValueException.class);
-            assertThatThrownBy(() -> PlayerName.of("bad name!")).isInstanceOf(InvalidValueException.class);
+            final String tooLong = String.join("", java.util.Collections.nCopies(101, "a"));
+            assertThatThrownBy(() -> PlayerIdentifier.of("ab")).isInstanceOf(InvalidValueException.class);
+            assertThatThrownBy(() -> PlayerIdentifier.of(tooLong)).isInstanceOf(InvalidValueException.class);
+            assertThatThrownBy(() -> PlayerIdentifier.of("bad name!")).isInstanceOf(InvalidValueException.class);
+            assertThatThrownBy(() -> PlayerIdentifier.of("with;semicolon")).isInstanceOf(InvalidValueException.class);
         }
     }
 

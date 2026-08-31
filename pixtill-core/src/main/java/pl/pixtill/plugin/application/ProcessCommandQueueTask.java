@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import pl.pixtill.plugin.domain.CommandResult;
-import pl.pixtill.plugin.domain.PlayerName;
+import pl.pixtill.plugin.domain.PlayerIdentifier;
 import pl.pixtill.plugin.domain.QueuedCommand;
 import pl.pixtill.plugin.domain.ServerUuid;
 import pl.pixtill.plugin.port.ApiClientException;
@@ -105,11 +105,11 @@ public final class ProcessCommandQueueTask implements Runnable {
         }
     }
 
-    private boolean isOnline(final PlayerName player) {
+    private boolean isOnline(final PlayerIdentifier player) {
         return players.isOnline(player);
     }
 
     private static String playerLabel(final QueuedCommand command) {
-        return command.player().map(PlayerName::value).orElse("-");
+        return command.player().map(PlayerIdentifier::value).orElse("-");
     }
 }

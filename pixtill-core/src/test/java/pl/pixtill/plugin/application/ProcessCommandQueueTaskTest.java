@@ -28,7 +28,7 @@ import pl.pixtill.plugin.domain.CommandId;
 import pl.pixtill.plugin.domain.CommandResult;
 import pl.pixtill.plugin.domain.CommandStatus;
 import pl.pixtill.plugin.domain.ConsoleCommand;
-import pl.pixtill.plugin.domain.PlayerName;
+import pl.pixtill.plugin.domain.PlayerIdentifier;
 import pl.pixtill.plugin.domain.QueuedCommand;
 import pl.pixtill.plugin.domain.ServerUuid;
 import pl.pixtill.plugin.port.ApiClientException;
@@ -59,7 +59,7 @@ class ProcessCommandQueueTaskTest {
         return new QueuedCommand(
                 CommandId.of(UUID.randomUUID()),
                 ConsoleCommand.of("give " + player + " diamond"),
-                player == null ? null : PlayerName.of(player),
+                player == null ? null : PlayerIdentifier.of(player),
                 requiresOnline);
     }
 
@@ -92,6 +92,18 @@ class ProcessCommandQueueTaskTest {
 
         verify(dispatcher, never()).dispatch(any());
         assertThat(reportedStatuses()).containsExactly(CommandStatus.DEFERRED);
+    }
+
+    @Test
+    @DisplayName("player offline but not required -> dispatched immediately, reported completed")
+    void executes_whenPlayerOfflineButNotRequired() {
+        final QueuedCommand cmd = command("Notch", false);
+        when(apiClient.claim(eq(SERVER), anyInt())).thenReturn(Collections.singletonList(cmd));
+
+        task.run();
+
+        verify(dispatcher).dispatch(cmd.command());
+        assertThat(reportedStatuses()).containsExactly(CommandStatus.COMPLETED);
     }
 
     @Test
