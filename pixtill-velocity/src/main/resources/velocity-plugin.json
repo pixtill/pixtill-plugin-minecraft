@@ -1,0 +1,7 @@
+{
+  "id": "pixtill",
+  "name": "Pixtill",
+  "version": "${version}",
+  "authors": ["Pixtill"],
+  "main": "pl.pixtill.plugin.velocity.PixtillVelocityPlugin"
+}
