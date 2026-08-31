@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 
 class QueuedCommandTest {
 
-    private static final PlayerName NOTCH = PlayerName.of("Notch");
+    private static final PlayerIdentifier NOTCH = PlayerIdentifier.of("Notch");
 
-    private QueuedCommand command(final PlayerName player, final boolean requiresOnline) {
+    private QueuedCommand command(final PlayerIdentifier player, final boolean requiresOnline) {
         return new QueuedCommand(
                 CommandId.of(UUID.randomUUID()),
                 ConsoleCommand.of("say hi"),

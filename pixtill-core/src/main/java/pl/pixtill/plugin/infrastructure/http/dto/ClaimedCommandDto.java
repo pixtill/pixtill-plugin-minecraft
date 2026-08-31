@@ -10,8 +10,11 @@ public final class ClaimedCommandDto {
     @SerializedName("command")
     private String command;
 
-    @SerializedName("playerNickname")
-    private String playerNickname;
+    @SerializedName("playerIdentifier")
+    private String playerIdentifier;
+
+    @SerializedName("requiresOnlinePlayer")
+    private Boolean requiresOnlinePlayer;
 
     public String getUuid() {
         return uuid;
@@ -21,7 +24,11 @@ public final class ClaimedCommandDto {
         return command;
     }
 
-    public String getPlayerNickname() {
-        return playerNickname;
+    public String getPlayerIdentifier() {
+        return playerIdentifier;
+    }
+
+    public boolean requiresOnlinePlayer() {
+        return requiresOnlinePlayer == null || requiresOnlinePlayer;
     }
 }

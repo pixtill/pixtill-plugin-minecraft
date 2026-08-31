@@ -1,7 +1,7 @@
 package pl.pixtill.plugin.velocity;
 
 import com.velocitypowered.api.proxy.ProxyServer;
-import pl.pixtill.plugin.domain.PlayerName;
+import pl.pixtill.plugin.domain.PlayerIdentifier;
 import pl.pixtill.plugin.port.PlayerAccessor;
 
 public final class VelocityPlayerAccessor implements PlayerAccessor {
@@ -13,7 +13,7 @@ public final class VelocityPlayerAccessor implements PlayerAccessor {
     }
 
     @Override
-    public boolean isOnline(final PlayerName player) {
+    public boolean isOnline(final PlayerIdentifier player) {
         return server.getPlayer(player.value()).isPresent();
     }
 }

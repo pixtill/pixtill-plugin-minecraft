@@ -19,9 +19,10 @@ class ClaimedCommandMapperTest {
     }
 
     @Test
-    void mapsCommandWithPlayerAsRequiringOnline() {
+    void mapsPlayerAndExplicitRequiresOnlineFlag() {
         final QueuedCommand command = mapper.toDomain(dto(
-                "{\"uuid\":\"22222222-2222-2222-2222-222222222222\",\"command\":\"say hi\",\"playerNickname\":\"Notch\"}"));
+                "{\"uuid\":\"22222222-2222-2222-2222-222222222222\",\"command\":\"say hi\","
+                        + "\"playerIdentifier\":\"Notch\",\"requiresOnlinePlayer\":true}"));
 
         assertThat(command.requiresPlayerOnline()).isTrue();
         assertThat(command.player()).isPresent();
@@ -29,11 +30,29 @@ class ClaimedCommandMapperTest {
     }
 
     @Test
-    void mapsCommandWithoutPlayerAsNotRequiringOnline() {
+    void honoursRequiresOnlinePlayerFalseEvenWithPlayer() {
         final QueuedCommand command = mapper.toDomain(dto(
-                "{\"uuid\":\"22222222-2222-2222-2222-222222222222\",\"command\":\"broadcast hi\",\"playerNickname\":null}"));
+                "{\"uuid\":\"22222222-2222-2222-2222-222222222222\",\"command\":\"broadcast hi\","
+                        + "\"playerIdentifier\":\"Notch\",\"requiresOnlinePlayer\":false}"));
 
         assertThat(command.requiresPlayerOnline()).isFalse();
+        assertThat(command.player()).isPresent();
+    }
+
+    @Test
+    void defaultsToRequiringOnlineWhenFlagAbsent() {
+        final QueuedCommand command = mapper.toDomain(dto(
+                "{\"uuid\":\"22222222-2222-2222-2222-222222222222\",\"command\":\"say hi\",\"playerIdentifier\":\"Notch\"}"));
+
+        assertThat(command.requiresPlayerOnline()).isTrue();
+    }
+
+    @Test
+    void mapsCommandWithoutPlayer() {
+        final QueuedCommand command = mapper.toDomain(dto(
+                "{\"uuid\":\"22222222-2222-2222-2222-222222222222\",\"command\":\"broadcast hi\","
+                        + "\"playerIdentifier\":null,\"requiresOnlinePlayer\":false}"));
+
         assertThat(command.player()).isEmpty();
     }
 
